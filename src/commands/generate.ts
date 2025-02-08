@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import {capitalize, formatDate} from "../../utils";
 
 export async function generate(args: string[]) {
   const [type, name] = args;
@@ -10,10 +11,14 @@ export async function generate(args: string[]) {
   }
   
   switch (type) {
+    case 'c':
+    case 'sc':
+    case 'component':
     case 'server-component':
       createServerComponent(name);
       break;
     
+    case 'cc':
     case 'client-component':
       createClientComponent(name);
       break;
@@ -33,7 +38,7 @@ export async function generate(args: string[]) {
 }
 
 function createServerComponent(name: string) {
-  const componentDir = path.join(process.cwd(), 'app', 'components', name);
+  const componentDir = path.join(process.cwd(), 'app', 'components', capitalize(name));
   const componentFile = path.join(componentDir, `index.tsx`);
   
   if (fs.existsSync(componentDir)) {
@@ -44,13 +49,12 @@ function createServerComponent(name: string) {
   fs.mkdirSync(componentDir, { recursive: true });
   
   const template = `
-// This is a Server Component
-// File: app/components/${name}/index.tsx
+// File: ${capitalize(name)}/index.tsx created on ${formatDate()}
 
-export default function ${name}() {
+export default function ${capitalize(name)}() {
   return (
     <div>
-      <h1>${name} (Server Component)</h1>
+      <h1>${capitalize(name)} (Server Component)</h1>
     </div>
   );
 }
@@ -61,8 +65,8 @@ export default function ${name}() {
 }
 
 function createClientComponent(name: string) {
-  const componentDir = path.join(process.cwd(), 'app', 'components', name);
-  const componentFile = path.join(componentDir, `index.tsx`);
+  const componentDir = path.join(process.cwd(), 'app', 'components', capitalize(name));
+  const componentFile = path.join(componentDir, `index.client.tsx`);
   
   if (fs.existsSync(componentDir)) {
     console.error(`Component directory already exists: ${componentDir}`);
@@ -72,17 +76,16 @@ function createClientComponent(name: string) {
   fs.mkdirSync(componentDir, { recursive: true });
   
   const template = `
-// This is a Client Component
-// File: app/components/${name}/index.tsx
+// File: ${capitalize(name)}/index.tsx created on ${formatDate()}
 
 "use client";
 
 import React from 'react';
 
-export default function ${name}() {
+export default function ${capitalize(name)}() {
   return (
     <div>
-      <h1>${name} (Client Component)</h1>
+      <h1>${capitalize(name)} (Client Component)</h1>
     </div>
   );
 }
