@@ -6,13 +6,19 @@ create a `cli.json` file in the root of your project with the following structur
 ```json
 {
   "defaultPaths": {
-    "components": {
-      "global" : "app/components",
-      "hotel" : "app/components/hotels",
+    "locationByFlag": {
+      "hotel": "app/components/hotels",
       "str": "app/components/str",
       "car": "app/components/cars",
       "activity": "app/components/activities"
     },
+    "flags": [
+      "--hotel",
+      "--str",
+      "--car",
+      "--activity"
+    ],
+    "components": "app/components",
     "page": "app/views/",
     "layout": "app/views/layouts"
   }
