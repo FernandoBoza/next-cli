@@ -5,7 +5,7 @@ export async function generate(args: string[]) {
   const { type, name, path , standalone} = parseGenerateArgs(args);
   
   if (!type || !name) {
-    console.log('Usage: jbcli generate <type> <name>');
+    console.log('Usage: cli generate <type> <name>');
     process.exit(1);
   }
   
