@@ -1,8 +1,10 @@
 /node_modules
+/.idea
 /.idea/misc.xml
 /.idea/modules.xml
 /.idea/.gitignore
 /.idea/cli.iml
+/.idea/prettier.xml
 
 /app/
 /dist/
