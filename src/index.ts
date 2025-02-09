@@ -12,7 +12,7 @@ async function main() {
     
     default:
       console.log('Available commands: generate (g)');
-      console.log('Usage: your-cli generate <type> <name> [options]');
+      console.log('Usage: jbcli generate <type> <name> [options]');
   }
 }
 

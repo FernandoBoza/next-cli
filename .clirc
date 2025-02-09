@@ -2,7 +2,7 @@
   "defaultPaths": {
     "server-component": "app/components",
     "client-component": "app/components",
-    "page": "app",
-    "layout": "app"
+    "page": "app/views/",
+    "layout": "app/views/layouts",
   }
 }
