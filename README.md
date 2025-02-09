@@ -1,26 +1,18 @@
 ## CLI instructions
 
 ### 1. Create cli config
-create a `cli.json` file in the root of your project with the following structure:
+create a `cli.json` file in the root of your project with the following props, `locationByFlag`, `flags`, `components`
 
 ```json
 {
   "defaultPaths": {
     "locationByFlag": {
-      "hotel": "app/components/hotels",
-      "str": "app/components/str",
-      "car": "app/components/cars",
-      "activity": "app/components/activities"
+      "demo": "app/demo"
     },
     "flags": [
-      "--hotel",
-      "--str",
-      "--car",
-      "--activity"
+      "--demo"
     ],
-    "components": "app/components",
-    "page": "app/views/",
-    "layout": "app/views/layouts"
+    "components": "app/components"
   }
 }
 ```
@@ -37,8 +29,8 @@ $ cli generate component <componentName> [productFlag, standaloneFlag]
 ## Server side
 cli generate component myComponent
 cli g c myComponent
-cli g sc myComponent --hotel
-cli g component booker --hotel --standalone
+cli g sc myComponent --shared
+cli g component booker --category --standalone
 
 ## Client side
 cli generate client-component myComponent
