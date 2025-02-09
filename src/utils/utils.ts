@@ -1,7 +1,7 @@
 import path from "path";
 import * as fs from "fs";
 import {clientComponentTemplate, serverComponentTemplate} from "./templates";
-import {Config, ProductType} from "./types";
+import {Config} from "./types";
 
 export function pascalCase(str: string): string {
   return str
@@ -41,16 +41,16 @@ export function parseGenerateArgs(args: string[]) {
     throw new Error('Usage: cli generate <type> <name> [flags]');
   }
 
-  const productFlags = ['--hotel', '--str', '--car', '--activity'];
-  const product = rest.filter(arg => productFlags.includes(arg))[0]?.slice(2) as ProductType;
+  const locationFlags = config?.defaultPaths.flags || [];
+  const location = rest.filter(arg => locationFlags.includes(arg))[0]?.slice(2);
   const standalone = rest.includes('--standalone');
   let path = ''
   
   if (config){
-    if (product){
-      path = config.defaultPaths.components[product];
+    if (location){
+      path = config.defaultPaths.locationByFlag[location];
     } else {
-      path = config.defaultPaths.components.global;
+      path = config.defaultPaths.components;
     }
   }
   
