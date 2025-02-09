@@ -1,9 +1,7 @@
 import {capitalize, formatDate, pascalCase} from "./utils";
 
-export function serverComponentTemplate(name: string, path?: string) {
+export function serverComponentTemplate(name: string) {
   return `
-// File: ${path ?? ''}/${name}/index.tsx created on ${formatDate()}
-
 export default function ${capitalize(name)}() {
   return (
     <div>
@@ -14,10 +12,8 @@ export default function ${capitalize(name)}() {
 `.trim();
 }
 
-export function clientComponentTemplate(name: string, path?: string) {
+export function clientComponentTemplate(name: string) {
   return `
-// File: ${path ?? ''}/${name}/index.client.tsx created on ${formatDate()}
-
 "use client";
 
 import React from 'react';

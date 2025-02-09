@@ -9,19 +9,17 @@ export async function generate(args: string[]) {
     process.exit(1);
   }
   
-  console.log({type, name, path, standalone})
-  
   switch (type) {
     case 'c':
     case 'sc':
     case 'component':
     case 'server-component':
-      createComponent(name, path)
+      createComponent(name, path, false, standalone)
       break;
 
     case 'cc':
     case 'client-component':
-      createComponent(name, path,true)
+      createComponent(name, path,true, standalone)
       break;
 
     default:

@@ -1,6 +1,7 @@
 import path from "path";
 import * as fs from "fs";
 import {clientComponentTemplate, serverComponentTemplate} from "./templates";
+import {Config} from "./types";
 
 export function capitalize(str: string) {
   if (!str) return str;
@@ -28,21 +29,20 @@ export function pascalCase(str: string): string {
 
 /**
  * Creates a server (aka RSC) or client component
- * Type: 'serverComponent'
  * @param name - The name of the component
+ * @param customPath - The custom path to create the component
  * @param client - Whether to create a client component
- * @param customPath
- * @param standalone
+ * @param standalone - Whether to create a standalone component
  */
 export function createComponent(name: string, customPath: string, client = false, standalone = false) {
-  const componentDir= path.join(process.cwd(), customPath, standalone ? name : '');
-  const componentFile = path.join(componentDir, client ? 'index.client.tsx' : 'index.tsx')
-  const template = client ? clientComponentTemplate(name, customPath) : serverComponentTemplate(name, customPath);
+  const componentDir = path.join(process.cwd(), customPath, standalone ? '' : name);
+  const componentFile = createFilePath(name, componentDir, client, standalone);
+  const template = client ? clientComponentTemplate(name) : serverComponentTemplate(name);
   
-  // if (fs.existsSync(componentDir)) {
-  //   console.error(`Component directory already exists: ${componentDir}`);
-  //   process.exit(1);
-  // }
+  if (fs.existsSync(componentDir)) {
+    console.error(`Component directory already exists: ${componentDir}`);
+    process.exit(1);
+  }
   
   fs.mkdirSync(componentDir, { recursive: true });
   fs.writeFileSync(componentFile, template, 'utf8');
@@ -55,7 +55,7 @@ export function parseGenerateArgs(args: string[]) {
   const [type, name, ...rest] = args;
   
   if (!type || !name) {
-    throw new Error('Usage: your-cli generate <type> <name> [flags]');
+    throw new Error('Usage: cli generate <type> <name> [flags]');
   }
 
   const productFlags = ['--hotel', '--str', '--car', '--activity'];
@@ -74,19 +74,7 @@ export function parseGenerateArgs(args: string[]) {
   return { type, name, path, standalone };
 }
 
-function loadConfig(): {
-  defaultPaths: {
-    components: {
-      global: string;
-      hotel: string;
-      str: string;
-      car: string;
-      activity: string;
-    };
-    pages: string;
-    layouts: string;
-  };
-} | undefined {
+function loadConfig(): Config {
   try {
     const configPath = path.join(process.cwd(), 'cli.json');
     let raw = fs.readFileSync(configPath, 'utf8');
@@ -95,5 +83,13 @@ function loadConfig(): {
   } catch (error) {
     console.error('Error loading config:', error);
     return undefined;
+  }
+}
+
+function createFilePath(name: string, dir: string, client = false, standalone = false) {
+  if (standalone){
+    return path.join(dir, `${name}${client ? '.client' : ''}.tsx`);
+  } else {
+    return path.join(dir, `index${client ? '.client' : ''}.tsx`);
   }
 }
