@@ -2,14 +2,14 @@ import {createComponent, parseGenerateArgs} from "../utils/utils";
 
 export async function generate(args: string[]) {
   
-  const { type, name, path } = parseGenerateArgs(args);
+  const { type, name, path , standalone} = parseGenerateArgs(args);
   
   if (!type || !name) {
     console.log('Usage: jbcli generate <type> <name>');
     process.exit(1);
   }
   
-  console.log(name, path)
+  console.log({type, name, path, standalone})
   
   switch (type) {
     case 'c':
@@ -23,14 +23,6 @@ export async function generate(args: string[]) {
     case 'client-component':
       createComponent(name, path,true)
       break;
-    //
-    // case 'page':
-    //   createPage(name);
-    //   break;
-    //
-    // case 'layout':
-    //   createLayout(name);
-    //   break;
 
     default:
       console.log(`Unknown type: ${type}`);
