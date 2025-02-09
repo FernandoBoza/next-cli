@@ -1,0 +1,13 @@
+{
+  "defaultPaths": {
+    "components": {
+      "global" : "app/components",
+      "hotel" : "app/components/hotels",
+      "str": "app/components/str",
+      "car": "app/components/cars",
+      "activity": "app/components/activities"
+    },
+    "page": "app/views/",
+    "layout": "app/views/layouts"
+  }
+}

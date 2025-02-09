@@ -1,8 +1,8 @@
 import {capitalize, formatDate, pascalCase} from "./utils";
 
-export function serverComponentTemplate(name: string) {
+export function serverComponentTemplate(name: string, path?: string) {
   return `
-// File: ${capitalize(name)}/index.tsx created on ${formatDate()}
+// File: ${path ?? ''}/${name}/index.tsx created on ${formatDate()}
 
 export default function ${capitalize(name)}() {
   return (
@@ -14,9 +14,9 @@ export default function ${capitalize(name)}() {
 `.trim();
 }
 
-export function clientComponentTemplate(name: string) {
+export function clientComponentTemplate(name: string, path?: string) {
   return `
-// File: ${capitalize(name)}/index.client.tsx created on ${formatDate()}
+// File: ${path ?? ''}/${name}/index.client.tsx created on ${formatDate()}
 
 "use client";
 
@@ -32,9 +32,9 @@ export default function ${capitalize(name)}() {
 `.trim();
 }
 
-export function  pageTemplate(name: string) {
+export function  pageTemplate(name: string, path?: string) {
   return `
-// File: app/${name}/page.tsx
+// File: app/${name}/page.tsx created on ${formatDate()}
 
 export default function ${pascalCase(name)}Page() {
   return (
@@ -47,9 +47,9 @@ export default function ${pascalCase(name)}Page() {
 `.trim();
 }
 
-export function layoutTemplate(name: string) {
+export function layoutTemplate(name: string, path?: string) {
   return `
-// File: app/${name}/layout.tsx
+// File: app/${name}/layout.tsx created on ${formatDate()}
 
 export default function ${pascalCase(name)}Layout({
   children,
