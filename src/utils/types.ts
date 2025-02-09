@@ -1,3 +1,5 @@
+export type ProductType = undefined | 'hotel' | 'str' | 'car' | 'activity'
+
 export type Config = {
   defaultPaths: {
     components: {

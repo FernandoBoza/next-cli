@@ -1,11 +1,11 @@
-import {capitalize, formatDate, pascalCase} from "./utils";
+import {pascalCase} from "./utils";
 
 export function serverComponentTemplate(name: string) {
   return `
-export default function ${capitalize(name)}() {
+export default function ${pascalCase(name)}() {
   return (
     <div>
-      <h1>${capitalize(name)} (Server Component)</h1>
+      <h1>${pascalCase(name)} (Server Component)</h1>
     </div>
   );
 }
@@ -18,10 +18,10 @@ export function clientComponentTemplate(name: string) {
 
 import React from 'react';
 
-export default function ${capitalize(name)}() {
+export default function ${pascalCase(name)}() {
   return (
     <div>
-      <h1>${capitalize(name)} (Client Component)</h1>
+      <h1>${pascalCase(name)} (Client Component)</h1>
     </div>
   );
 }
@@ -30,7 +30,6 @@ export default function ${capitalize(name)}() {
 
 export function  pageTemplate(name: string, path?: string) {
   return `
-// File: app/${name}/page.tsx created on ${formatDate()}
 
 export default function ${pascalCase(name)}Page() {
   return (
@@ -45,7 +44,6 @@ export default function ${pascalCase(name)}Page() {
 
 export function layoutTemplate(name: string, path?: string) {
   return `
-// File: app/${name}/layout.tsx created on ${formatDate()}
 
 export default function ${pascalCase(name)}Layout({
   children,

@@ -1,24 +1,7 @@
 import path from "path";
 import * as fs from "fs";
 import {clientComponentTemplate, serverComponentTemplate} from "./templates";
-import {Config} from "./types";
-
-export function capitalize(str: string) {
-  if (!str) return str;
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-}
-
-export function formatDate() {
-  const date = new Date();
-  
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  };
-  
-  return date.toLocaleDateString('en-US', options);
-}
+import {Config, ProductType} from "./types";
 
 export function pascalCase(str: string): string {
   return str
@@ -39,8 +22,8 @@ export function createComponent(name: string, customPath: string, client = false
   const componentFile = createFilePath(name, componentDir, client, standalone);
   const template = client ? clientComponentTemplate(name) : serverComponentTemplate(name);
   
-  if (fs.existsSync(componentDir)) {
-    console.error(`Component directory already exists: ${componentDir}`);
+  if (fs.existsSync(componentFile)) {
+    console.error(`Component already exists: ${componentFile}`);
     process.exit(1);
   }
   
@@ -59,7 +42,7 @@ export function parseGenerateArgs(args: string[]) {
   }
 
   const productFlags = ['--hotel', '--str', '--car', '--activity'];
-  const product = rest.filter(arg => productFlags.includes(arg))[0]?.slice(2);
+  const product = rest.filter(arg => productFlags.includes(arg))[0]?.slice(2) as ProductType;
   const standalone = rest.includes('--standalone');
   let path: string;
   
