@@ -44,7 +44,7 @@ export function parseGenerateArgs(args: string[]) {
   const productFlags = ['--hotel', '--str', '--car', '--activity'];
   const product = rest.filter(arg => productFlags.includes(arg))[0]?.slice(2) as ProductType;
   const standalone = rest.includes('--standalone');
-  let path: string;
+  let path = ''
   
   if (config){
     if (product){
