@@ -28,7 +28,7 @@ export default function ${pascalCase(name)}() {
 `.trim();
 }
 
-export function  pageTemplate(name: string, path?: string) {
+export function  pageTemplate(name: string) {
   return `
 
 export default function ${pascalCase(name)}Page() {
@@ -42,7 +42,7 @@ export default function ${pascalCase(name)}Page() {
 `.trim();
 }
 
-export function layoutTemplate(name: string, path?: string) {
+export function layoutTemplate(name: string) {
   return `
 
 export default function ${pascalCase(name)}Layout({
