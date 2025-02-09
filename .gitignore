@@ -2,6 +2,7 @@
 /.idea/misc.xml
 /.idea/modules.xml
 /.idea/.gitignore
+/.idea/cli.iml
 
 /app/
 /dist/
