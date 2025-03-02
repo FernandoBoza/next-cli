@@ -1,12 +1,12 @@
-import path from "path";
-import * as fs from "fs";
-import {clientComponentTemplate, serverComponentTemplate} from "./templates";
-import {Config} from "./types";
+import path from 'path';
+import * as fs from 'fs';
+import { clientComponentTemplate, serverComponentTemplate } from './templates';
+import { Config } from './types';
 
 export function pascalCase(str: string): string {
   return str
     .split(/[\s-]+/)
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join('');
 }
 
@@ -17,43 +17,57 @@ export function pascalCase(str: string): string {
  * @param client - Whether to create a client component
  * @param standalone - Whether to create a standalone component
  */
-export function createComponent(name: string, customPath: string, client = false, standalone = false) {
-  const componentDir = path.join(process.cwd(), customPath, standalone ? '' : name);
+export function createComponent(
+  name: string,
+  customPath: string,
+  client = false,
+  standalone = false,
+) {
+  const componentDir = path.join(
+    process.cwd(),
+    customPath,
+    standalone ? '' : name,
+  );
   const componentFile = createFilePath(name, componentDir, client, standalone);
-  const template = client ? clientComponentTemplate(name) : serverComponentTemplate(name);
-  
+  const template = client
+    ? clientComponentTemplate(name)
+    : serverComponentTemplate(name);
+
   if (fs.existsSync(componentFile)) {
     console.error(`Component already exists: ${componentFile}`);
     process.exit(1);
   }
-  
+
   fs.mkdirSync(componentDir, { recursive: true });
   fs.writeFileSync(componentFile, template, 'utf8');
-  console.log(`${client ? 'Client' : 'Server'} Component created at ${componentFile}`);
+  console.log(
+    `${client ? 'Client' : 'Server'} Component created at ${componentFile}`,
+  );
 }
-
 
 export function parseGenerateArgs(args: string[]) {
   const config = loadConfig();
   const [type, name, ...rest] = args;
-  
+
   if (!type || !name) {
     throw new Error('Usage: cli generate <type> <name> [flags]');
   }
 
   const locationFlags = config?.defaultPaths.flags || [];
-  const location = rest.filter(arg => locationFlags.includes(arg))[0]?.slice(2);
+  const location = rest
+    .filter((arg) => locationFlags.includes(arg))[0]
+    ?.slice(2);
   const standalone = rest.includes('--standalone');
-  let path = ''
-  
-  if (config){
-    if (location){
+  let path = '';
+
+  if (config) {
+    if (location) {
       path = config.defaultPaths.locationByFlag[location];
     } else {
       path = config.defaultPaths.components;
     }
   }
-  
+
   return { type, name, path, standalone };
 }
 
@@ -69,8 +83,13 @@ function loadConfig(): Config {
   }
 }
 
-function createFilePath(name: string, dir: string, client = false, standalone = false) {
-  if (standalone){
+function createFilePath(
+  name: string,
+  dir: string,
+  client = false,
+  standalone = false,
+) {
+  if (standalone) {
     return path.join(dir, `${name}${client ? '.client' : ''}.tsx`);
   } else {
     return path.join(dir, `index${client ? '.client' : ''}.tsx`);

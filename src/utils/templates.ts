@@ -1,4 +1,4 @@
-import {pascalCase} from "./utils";
+import { pascalCase } from './utils';
 
 export function serverComponentTemplate(name: string) {
   return `
@@ -14,7 +14,7 @@ export default function ${pascalCase(name)}() {
 
 export function clientComponentTemplate(name: string) {
   return `
-"use client";
+'use client';
 
 import React from 'react';
 
@@ -28,7 +28,7 @@ export default function ${pascalCase(name)}() {
 `.trim();
 }
 
-export function  pageTemplate(name: string) {
+export function pageTemplate(name: string) {
   return `
 
 export default function ${pascalCase(name)}Page() {
