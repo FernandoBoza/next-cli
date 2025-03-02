@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { generate } from './commands/generate';
+import { setup } from './commands/setup';
 
 const [, , command, ...args] = process.argv;
 
@@ -8,6 +9,9 @@ async function main() {
     case 'generate':
     case 'g':
       await generate(args);
+      break;
+    case 'setup':
+      await setup(args);
       break;
 
     default:
